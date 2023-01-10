@@ -2,12 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
-use Mockery\Exception;
 use Spatie\DbDumper\Databases\MySql;
-use Ramsey\Uuid\Nonstandard\Uuid;
-
 class DbDumper extends Controller
 {
     /**
@@ -21,8 +17,7 @@ class DbDumper extends Controller
             ->setDbName(Config::get('database.connections.mysql.database'))
             ->setUserName(Config::get('database.connections.mysql.username'))
             ->setPassword(Config::get('database.connections.mysql.password'))
-            ->setDumpBinaryPath('storage/app/public/')
-            ->dumpToFile('/last-dump.sql');
+            ->dumpToFile(Config::get('dbdumper.dump_path'));
         return response()->json('/last-dump.sql');
     }
 }
